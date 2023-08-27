@@ -1,20 +1,7 @@
 public class Transcript {
 
-    private String userCity;
-    private final String baseUrl = "http://api.weatherapi.com/v1";
     private Location location; // nestesd classes to meet the api response architecture 
-    private CurrentWeatherData current; // nestesd classes to meet the api response architecture 
-
-    public String getUserCity() {
-        return userCity;
-    }
-    public void setUserCity(String userCity){
-        this.userCity = userCity;
-    }
-
-    public String getUrl(String key) {
-        return baseUrl + "/current.json?key=" + key + "&q=" + userCity;
-    }
+    private CurrentWeatherData current; // nestesd classes to meet the api response architecture
 
     public Location getLocation() {
         return location;
