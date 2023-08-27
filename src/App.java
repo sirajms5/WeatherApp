@@ -2,14 +2,16 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import com.google.gson.Gson;
+
 
 public class App {
 
 	public static void main(String[] args) {
-		ApiKey apiKey = new ApiKey();		
+		ApiKey apiKey = new ApiKey();
 		final String key = apiKey.getApiKey();
 		Transcript transcript = new Transcript();
-		transcript.setCity("Ottawa");
+		transcript.setUserCity("London");
 
 		try {
 			URL url = new URL(transcript.getUrl(key));
@@ -27,7 +29,10 @@ public class App {
 				}
 				inReader.close();
 
-				System.out.println(response.toString());
+				Gson gson = new Gson();
+				transcript = gson.fromJson(response.toString(), Transcript.class); // mapping response to instance variable
+
+				System.out.println(transcript.getLocation().getCountry());
 			} else {
 				System.out.println("Request failed. Response code: " + responseCode);
 			}
