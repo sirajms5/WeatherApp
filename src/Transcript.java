@@ -1,7 +1,16 @@
 public class Transcript {
 
+    private boolean isCreated = false;
     private Location location; // nestesd classes to meet the api response architecture 
-    private CurrentWeatherData current; // nestesd classes to meet the api response architecture
+    private CurrentWeatherData current; // nestesd classes to meet the api response architecture    
+
+    public boolean isCreated() {
+        return isCreated;
+    }
+
+    public void setCreated(boolean isCreated) {
+        this.isCreated = isCreated;
+    }
 
     public Location getLocation() {
         return location;

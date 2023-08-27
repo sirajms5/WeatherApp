@@ -12,7 +12,9 @@ public class WeatherApiConnector {
         return BASEURL + "/current.json?key=" + key + "&q=" + city;
     }
 
-    public void sendRequest(String key, String city) {
+    public Transcript sendRequest(String key, String city) {
+        Transcript transcript = new Transcript();
+
         try {
             URL url = new URL(getUrl(key, city));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -29,11 +31,11 @@ public class WeatherApiConnector {
                 }
                 inReader.close();
 
-                Gson gson = new Gson();
-                Transcript transcript = new Transcript();
+                Gson gson = new Gson();                
                 transcript = gson.fromJson(response.toString(), Transcript.class); // mapping response to instance variable
 
-                System.out.println(transcript.getLocation().getCountry());
+                transcript.setCreated(true); // to make sure that transcript is populated
+                System.out.println(response); // testing purposes
             } else {
                 System.out.println("Request failed. Response code: " + responseCode);
             }
@@ -41,5 +43,7 @@ public class WeatherApiConnector {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return transcript;
     }
 }
