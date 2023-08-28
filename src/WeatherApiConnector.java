@@ -31,11 +31,10 @@ public class WeatherApiConnector {
                 }
                 inReader.close();
 
-                Gson gson = new Gson();                
+                Gson gson = new Gson();
                 transcript = gson.fromJson(response.toString(), Transcript.class); // mapping response to instance variable
 
                 transcript.setCreated(true); // to make sure that transcript is populated
-                System.out.println(response); // testing purposes
             } else {
                 System.out.println("Request failed. Response code: " + responseCode);
             }
