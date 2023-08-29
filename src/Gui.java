@@ -128,8 +128,8 @@ public class Gui {
     }
 
     private void addWeatherDetails() {
-        details.setLayout(new GridLayout(0, 2, 0, 10));
-        details.setBorder(new EmptyBorder(0, 10, 10, 10));
+        details.setLayout(new GridLayout(0, 2, 40, 10));
+        details.setBorder(new EmptyBorder(0, 40, 10, 10));
         JLabel cityTag = new JLabel("City:");
         JLabel cityName = new JLabel(transcript.getLocation().getName());
         JLabel temparatureTag = new JLabel("Temprature C" + DEGREE + ":");
