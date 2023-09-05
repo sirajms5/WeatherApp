@@ -24,26 +24,67 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * The {@code Gui} class is used to generate the Graphical User Interface (GUI)
+ * 
+ * @author Siraj Mohammed Saleem
+ * @version 1.0
+ * @see ApiKey
+ * @see Transcript
+ * @see WeatherApiConnector
+ * @see JFrame
+ * @see JPanel
+ * @see JTextField
+ * @see JButton
+ * @see JLabel
+ * @see BoxLayout
+ * @see BorderLayout
+ * @see FlowLayout
+ * @see GridLayout
+ * @see ActionListener
+ * @see MouseAdapter
+ * @see Cursor
+ * @see Color
+ * @see Desktop
+ * @see URI
+ * @see URL
+ * @see BufferedImage
+ * @see ImageIO
+ * @since 1.0
+ */
 public class Gui {
+	
+	 private JFrame frame = new JFrame("Weather App"); // The main frame of the GUI
+	 private JPanel northPanel = new JPanel(); // The top panel for user input and search button
+	 private JPanel centerPanel = new JPanel(); // The central panel for displaying weather details
+	 private JPanel details = new JPanel(); // Panel for detailed weather information
+	 private JPanel imagePanel = new JPanel(); // Panel for weather condition icons
+	 private JPanel southPanel = new JPanel(); // The bottom panel for additional information
+	 private JTextField userInputField; // The text input field for user queries
+	 private Transcript transcript; // Transcript for displaying weather data
+	 private final String DEGREE = "\u00B0"; // Degree symbol for temperature display
 
-    private JFrame frame = new JFrame("Weather App");
-    private JPanel northPanel = new JPanel();
-    private JPanel centerPanel = new JPanel();
-    private JPanel details = new JPanel();
-    private JPanel imagePanel = new JPanel();
-    private JPanel southPanel = new JPanel();
-    private JTextField userInputField;
-    private Transcript transcript;
-    private final String DEGREE = "\u00B0";
-
+    /**
+     * gets the transcript instance
+     * 
+     * @return Transcript transcript
+     */
     public Transcript getTranscript() {
         return transcript;
     }
 
+    /**
+     * sets the transcript parameter to the instance variable transcript
+     * 
+     * @param transcript Transcript
+     */
     public void setTranscript(Transcript transcript) {
         this.transcript = transcript;
     }
 
+    /**
+     * sets the north panel of the GUI
+     */
     public void setNorthPanel() {
         northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
         northPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
@@ -56,12 +97,18 @@ public class Gui {
         frame.add(northPanel, BorderLayout.NORTH);
     }
 
+    /**
+     * creates a label and add it to the north panel
+     */
     private void addWelcomeLabel() {
         JLabel welcome = new JLabel("Welcome to Weather App");
         welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
         northPanel.add(welcome);
     }
 
+    /**
+     * adds the search panel to the north panel and assign a text field and label to it 
+     */
     private void addSearchInputPanel() {
         JPanel searchInputPanel = new JPanel();
         searchInputPanel.setLayout(new BoxLayout(searchInputPanel, BoxLayout.X_AXIS));
@@ -76,6 +123,10 @@ public class Gui {
         northPanel.add(searchInputPanel);
     }
 
+    /**
+     * adds the search button to the north panel
+     * as well as having an anonymous inner class method to handle the button click
+     */
     private void addSearchButtonPanel() {
         JPanel searchButtonPanel = new JPanel();
         searchButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -90,12 +141,17 @@ public class Gui {
         northPanel.add(searchButtonPanel);
     }
 
+    /**
+     * takes user input and send it to the WeatherApiConnector
+     * class, if result is true and transcript is created then it will generate
+     * the API request output (saved in transcript instance) in the GUI
+     */
     private void handleSearchButtonClicked() {
         String city = userInputField.getText().trim();
         ApiKey apiKey = new ApiKey();
-        final String key = apiKey.getApiKey();
+        final String KEY = apiKey.getApiKey(); // make sure to provide your own API key
         WeatherApiConnector weatherApiConnector = new WeatherApiConnector();
-        transcript = weatherApiConnector.sendRequest(key, city);
+        transcript = weatherApiConnector.sendRequest(KEY, city);
 
         if (transcript.isCreated()) {
             clearPreviousResults();
@@ -107,12 +163,20 @@ public class Gui {
         }
     }
 
+    /**
+     * clears previous results when user clicks the search button
+     * and successful result
+     */
     private void clearPreviousResults() {
         details.removeAll();
         imagePanel.removeAll();
         centerPanel.removeAll();
     }
 
+    /**
+     * generates the center panel that will hold the weather details
+     * coming from Weather API and saved in transcript instance
+     */
     private void setCenterPanel() {
         centerPanel.setLayout(new GridLayout(0, 1));
         addWeatherIcon();
@@ -120,6 +184,9 @@ public class Gui {
         frame.add(centerPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * adds the weather icon to the center panel
+     */
     private void addWeatherIcon() {
         JLabel weatherIcon = loadImage(transcript.getCurrent().getCondition().getIcon());
         imagePanel.setLayout(new GridLayout(0, 1, 0, 10));
@@ -127,6 +194,10 @@ public class Gui {
         centerPanel.add(imagePanel);
     }
 
+    /**
+     * adds labels to the center panel that shows the
+     * details coming from the Weather API and saved in transcript instance
+     */
     private void addWeatherDetails() {
         details.setLayout(new GridLayout(0, 2, 40, 10));
         details.setBorder(new EmptyBorder(0, 40, 10, 10));
@@ -214,18 +285,29 @@ public class Gui {
         centerPanel.add(details);
     }
 
+    /**
+     * updates the south panel after clicking the
+     * search button for better User Interface (UI)
+     */
     private void updateSouthPanelMargin() {
         southPanel.setBorder(new EmptyBorder(20, 0, 0, 0));
         frame.add(southPanel, BorderLayout.SOUTH);
         frame.pack();
     }
 
+    /**
+     * generates the GUI
+     */
     public void generateGui() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
 
+    /**
+     * generates the south panel of the GUI that holds
+     * the developer name and link to developer portfolio
+     */
     public void setSouthPanel() {
         southPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
         JLabel developerTag = new JLabel("Developed By:");
@@ -244,6 +326,11 @@ public class Gui {
         frame.add(southPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * opens the browser using link provided
+     * 
+     * @param website String
+     */
     private void openWebpage(String website) {
         try {
             Desktop.getDesktop().browse(new URI(website));
@@ -252,7 +339,12 @@ public class Gui {
         }
     }
 
-    // loadImage will fetch the image based on provided url
+    /**
+     * fetches the image based on provided url
+     * 
+     * @param link String
+     * @return JLabel
+     */
     private JLabel loadImage(String link) {
         try {
             URL url = new URL("https:" + link);
