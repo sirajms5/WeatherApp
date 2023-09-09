@@ -1,6 +1,7 @@
 # WeatherApp
 
-#### Using RESTful API to get weather details into Java GUI.
+- Using RESTful API to get weather details into Java GUI.
+- Demonstrating the usage of Object-Oriented Programming (OOP) principles and Data-Transfer-Object (DTO) design patterns.
 
 #### Below is a demonstration of the Weather App:
 <br>
